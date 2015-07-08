@@ -1,5 +1,7 @@
 package com.leetcode.ljia2.solution100;
 
+import com.leetcode.ljia2.TreeNode;
+
 public class Solution {
 	public boolean isSameTree(TreeNode p, TreeNode q){
 		if(p != null && q != null){

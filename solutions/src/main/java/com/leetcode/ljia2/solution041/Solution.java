@@ -1,42 +1,54 @@
 package com.leetcode.ljia2.solution041;
+
+import java.util.HashSet;
+
 /**
+ * Given an unsorted integer array, find the first missing positive integer. 
+ * For example,
+ * Given [1,2,0] return 3,
+ * and [3,4,-1,1] return 2. 
+ * Your algorithm should run in O(n) time and uses constant space.
  * 
- * Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
- * For example, Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6. 
+ * Solution: scan each element E
+ *    if E == 1 firstPositive = E + 1
+ *    if E <= 0 firstPositive = 1 and check whether ther 1 is in the array, if not see whether firstPositive is smallest
+ *    if E > 1: firstPositive = E-1 or E + 1and check  whetherfirstPositive in the array, if not see whether firstPositive is smallest
  * 
- * See the picture: https://leetcode.com/problems/trapping-rain-water/
- * 
- * The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped. Thanks Marcos for contributing this image!
  * 
  * **/
 public class Solution {
-	public int trap(int[] height) {
-        if(height == null || height.length == 1) return 0;
-        int start = 0;
-        int trap = 0;
-        while(start < height.length){
-        	int end = start+1;
-        	int substract = height[start];
-        	while(end < height.length){
-        		if(height[end] < height[start]){
-        			substract += height[end];
-        			end += 1;
+	public int firstMissingPositive(int[] nums) {
+		if(nums == null || nums.length == 0) return 1;
+        HashSet<Integer> numshash = new HashSet<Integer>();
+        for(int num : nums){
+        	if(num > 0) numshash.add(num);
+        }
+        int firstPositive = Integer.MAX_VALUE;
+        for(int num : nums){
+        	if(num <= 0){
+        		int target = 1;
+        		if(!numshash.contains(target)){
+        			if(firstPositive > target){
+        				firstPositive = target;
+        			}
+        		}
+        	}else if(num == 1){
+        		int target = num + 1;
+        		if(!numshash.contains(target)){
+        			firstPositive = Math.min(firstPositive, target);
+        		}
+        	}else if(num > 1){
+        		int target = num - 1;
+        		if(!numshash.contains(target)){
+        			firstPositive = Math.min(firstPositive, target);
         		}else{
-        			break;
+        			target = num + 1;
+        			if(!numshash.contains(target)){
+        				firstPositive = Math.min(firstPositive, target);
+            		}
         		}
         	}
-        	if(end < height.length){
-        		int subtrap = (end-start)*Math.min(height[start], height[end]) - substract;
-        		trap +=subtrap;
-        		start = end;
-        	}else{
-        		break;
-        	}        	
         }
-        if(start > 0){
-        	return trap;
-        }else{
-        	return (end-start)*Math.min(height[start], height[end]) - substract;
-        }
+        return firstPositive;
     }
 }
