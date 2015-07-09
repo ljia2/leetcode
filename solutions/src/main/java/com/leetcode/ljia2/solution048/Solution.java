@@ -22,7 +22,7 @@ public class Solution {
 			index++;
 		}
 		
-		// move column1 to row1
+		// move column1 to row1 (pay attention!!!)
 		for(int i = column1; i<= column2; i++){
 			matrix[row1][i] = matrix[n-1-i][column1];
 		}

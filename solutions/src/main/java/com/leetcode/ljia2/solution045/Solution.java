@@ -8,43 +8,37 @@ package com.leetcode.ljia2.solution045;
  * Given array A = [2,3,1,1,4]
  * The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
  * 
- * numstep2last[i] = j mean the minimum num of steps from i to last is j. 
- * from the last element to the first element to calculate numstep2last array. 
+ * Solution: 
+ *    1) start from the last to find out the left most index, last_index, what is one step away from the last element.
+ *    2) start from last_index to find out the left most index, last_index', which is one step away from the last_index
+ *    3) if not reach the first index, last_index = last_index' and repeat steps 2) and 3). 
+ *    
+ * Idea: always find the left most index that is one step away from the last left most index in a greey way. The greedy manner can guarantee the minimum results. 
+ * 
  * 
  * **/
 public class Solution {
 	public int jump(int[] nums) {
-        if(nums == null || nums.length == 0) return 0;
-        int[] numstep2last = new int[nums.length];
-        int indexOfMinimumStep2Last = Integer.MAX_VALUE;
-        for(int index = nums.length - 1; index > -1; index--){
-        	if(index == nums.length - 1){
-        		numstep2last[index] = 0;
-        		indexOfMinimumStep2Last = index;
-        	}else{
-        		// early stop condition
-        		if(nums[0] >= indexOfMinimumStep2Last){
-        			return numstep2last[indexOfMinimumStep2Last] + 1;
-        		}else{
-        			// direct reach last element
-        			if(index + nums[index] >= nums.length - 1){
-        				numstep2last[index] = 1;
-        			}else{
-        				if(index + nums[index] >= indexOfMinimumStep2Last){
-        					numstep2last[index] = numstep2last[indexOfMinimumStep2Last] + 1;
-        				}else{
-				    		int min_num_step2last = Integer.MAX_VALUE;
-				    		for(int step = index + 1; step < Math.min(nums.length, index + nums[index] + 1); step++){
-				    			if (min_num_step2last > numstep2last[step] + 1){
-				    				min_num_step2last = numstep2last[step] + 1;
-				    			}
-				    		}
-				    		numstep2last[index] = min_num_step2last;
-        				}
-        			}		    		
+        if(nums == null || nums.length == 0 || nums.length == 1) return 0;
+        int lastIndex = nums.length - 1;
+        int step = 0;
+        while(lastIndex > -1){
+        	int leftIndex = 0;
+        	for(int index = 0; index < lastIndex; index++){
+        		if(index + nums[index] >= lastIndex){
+        			// start for the left to find the left most one reaching the element at lastIndex. 
+        			leftIndex = index;
+        			break;
         		}
         	}
+        	if(leftIndex < lastIndex){
+        		step += 1;
+        		if(leftIndex == 0) return step;
+        		lastIndex = leftIndex;
+        	}else{
+        		return -1;
+        	}
         }
-        return numstep2last[0];
+        return step;
     }
 }
