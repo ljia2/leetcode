@@ -15,21 +15,35 @@ public class Solution {
 	public List<List<Integer>> permute(int[] nums) {
 		List<List<Integer>> results = new ArrayList<List<Integer>>();
         if(nums == null || nums.length == 0) return results;
-        generatePermutation(nums, 0, results);
+        results = generatePermutation(nums, 0);
         return results;
     }
 	
-	public void generatePermutation(int[] nums, int start, List<List<Integer>> results){
+	public List<List<Integer>> generatePermutation(int[] nums, int start){
+		List<List<Integer>> results = new ArrayList<List<Integer>>();
 		if(start == nums.length - 1){
 			List<Integer> result = new ArrayList<Integer>();
 			result.add(nums[start]);
 			results.add(result);
 		}else{
-			List<List<Integer>> tracker = new ArrayList<List<Integer>>();
-			generatePermutation(nums, start + 1, results);
-			for(List<Integer> result : results){
-				
+			List<List<Integer>> subresults = generatePermutation(nums, start + 1);
+			for(List<Integer> subresult : subresults){
+				for(int index = 1; index < subresult.size(); index++){
+					List<Integer> result = new ArrayList<Integer>();
+					result.addAll(subresult.subList(0, index));
+					result.add(nums[start]);
+					result.addAll(subresult.subList(index, subresult.size()));
+					results.add(result);
+				}
+				List<Integer> result = new ArrayList<Integer>(subresult);
+				result.add(nums[start]);
+				results.add(result);
+				result = new ArrayList<Integer>();
+				result.add(nums[start]);
+				result.addAll(subresult);
+				results.add(result);
 			}
 		}
-	}
+		return results;
+	}	
 }
