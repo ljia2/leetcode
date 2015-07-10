@@ -5,23 +5,20 @@ package com.leetcode.ljia2.solution053;
  * For example, given the array [−2,1,−3,4,−1,2,1,−5,4],
  * the contiguous subarray [4,−1,2,1] has the largest sum = 6. 
  * 
+ * O(n) solution: 
+ *    given a maximum subarray, the prefix subarray must have a sum of <= 0 and the affix subarray also must have a sum of <=0
+ *    therefore, we can just calculate sum from the start and reset sum when sum < 0; 
  * **/
 public class Solution {
 	public int maxSubArray(int[] nums) {
 		if(nums == null || nums.length == 0) return 0;
-		if(nums.length == 1) return nums[0];
-		
+		int maxSum = Integer.MIN_VALUE;
 		int sum = 0;
-		for(int num : nums) sum += num;
-		
-		int start = 0, end = nums.length-1;
-		int minleftrightsum = Integer.MAX_VALUE;
-		int leftrightsum = 0;
-		while(start <= end){
-			minleftrightsum = Math.min(leftrightsum + nums[start] + nums[end], Math.min(leftrightsum + nums[start], leftrightsum + nums[end]));
-			start += 1;
-			end -= 1;
+		for(int i = 0; i < nums.length; i++){
+			sum += nums[i];
+			maxSum = Math.max(sum, maxSum);
+			if(sum < 0){ sum = 0; }
 		}
-		return sum - minleftrightsum;			
+		return maxSum;
     }
 }
