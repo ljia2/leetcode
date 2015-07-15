@@ -7,8 +7,5 @@ import java.util.List;
  * The algorithm should run in linear time and in O(1) space.
  * **/
 public class Solution {
-	public List<Integer> majorityElement(int[] nums) {
-        List<Integer> result = new ArrayList<Integer>();
-        
-    }
+	
 }

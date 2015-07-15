@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.runner.RunWith;
 /**
  * Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
  * For example, given n = 3, a solution set is:
@@ -17,9 +16,6 @@ import org.junit.runner.RunWith;
  *In order to get that, for each string in the list, insert "()" in every position until the end.
  *
  */
-
-
-
 
 public class Solution {
 	public List<String> generateParenthesis(int n) {

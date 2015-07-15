@@ -7,15 +7,5 @@ package com.leetcode.ljia2.solution122;
  * **/
 
 public class Solution {
-	public int maxProfit(int[] prices){
-		int max_profit = 0;
-		int buy = 0, sell = 0;
-		while(buy < prices.length - 1){
-			if(prices[buy + 1] >= prices[buy]){
-				buy += 1;
-			}else{
-				
-			}
-		}
-	}
+	
 }
