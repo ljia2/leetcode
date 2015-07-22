@@ -33,7 +33,10 @@ public class Solution {
         		results.add(matrix[i][n-1]);
         	}
         }else{
-	        for(int layer = 0; layer <= Math.min(m, n)/2; layer++){
+        	// how many layers for m*n matrix
+        	int maxLayerIndex = Math.min(m, n) % 2 == 0 ? Math.min(m, n)/2 : Math.min(m, n)/2 + 1;
+	        
+        	for(int layer = 0; layer < maxLayerIndex; layer++){
 	        	int startrow = layer; 
 	        	int endrow = m - layer - 1;
 	        	int startcolumn = layer;
